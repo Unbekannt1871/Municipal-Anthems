@@ -4,11 +4,52 @@
   <meta charset="UTF-8">
   <title>自治体歌集成</title>
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 2rem; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #004e7c;
+      margin-bottom: 1rem;
+    }
+    p.intro {
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      color: #666;
+    }
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .nav-links a {
+      display: block;
+      background-color: #e0efff;
+      padding: 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #004e7c;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .nav-links a:hover {
+      background-color: #c6e4ff;
+    }
   </style>
 </head>
 <body>
   <h1>ようこそ、自治体歌の世界へ</h1>
-  <p>このページは試作中です。順次構築していきます。</p>
+  <p class="intro">このページは試作中です。順次構築していきます。</p>
+
+  <div class="nav-links">
+    <a href="map.html">地図から探す</a>
+    <a href="list.html">市町村名から探す</a>
+    <a href="search.html">単語・フレーズから探す</a>
+  </div>
 </body>
 </html>
