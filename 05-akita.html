@@ -2,13 +2,15 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>秋田市の自治体歌</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>秋田市民歌集</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
       background-color: #fdfdfd;
       color: #333;
+      line-height: 1.6;
     }
     .container {
       display: flex;
@@ -18,10 +20,22 @@
       background-color: #f0f0f0;
       padding: 1rem;
       border-right: 1px solid #ccc;
+      height: 100vh;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+      overflow-y: auto;
     }
+    .main {
+      margin-left: 220px;
+      padding: 2rem;
+      max-width: calc(100vw - 260px);
+    }
+
     .sidebar h2 {
       font-size: 1rem;
-      margin-bottom: 0.5rem;
+      margin: 1rem 0 0.5rem;
       color: #555;
     }
     .sidebar ul {
@@ -39,20 +53,20 @@
       text-decoration: underline;
     }
 
-    .main {
-      flex: 1;
-      padding: 2rem;
-    }
     .song-section {
       margin-bottom: 3rem;
       position: relative;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 2rem;
+    }
+    .song-section:last-of-type {
+      border-bottom: none;
     }
     .song-section h2 {
       font-size: 1.4rem;
       margin-bottom: 0.3rem;
       color: #7b4c20;
     }
-
     .song-meta-block {
       position: absolute;
       top: 0.3rem;
@@ -62,14 +76,41 @@
       text-align: right;
       line-height: 1.4;
       width: 250px;
+      background-color: #f9f9f9;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border-left: 3px solid #7b4c20;
     }
 
-    .lyrics {
-      white-space: pre-wrap;
-      line-height: 1.8;
+    .lyrics-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
       margin-top: 3rem;
       margin-bottom: 1rem;
-      max-width: 90%;
+    }
+    .verse {
+      flex: 1;
+      min-width: 240px;
+      background-color: #f8f8f8;
+      padding: 1rem;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      border-left: 3px solid #ddd;
+      transition: border-color 0.3s ease;
+    }
+    .verse:hover {
+      border-left-color: #7b4c20;
+    }
+    .verse.center {
+      text-align: center;
+    }
+    .verse-number {
+      font-weight: bold;
+      color: #7b4c20;
+      margin-bottom: 0.5rem;
+      display: block;
     }
 
     .footnote {
@@ -78,84 +119,152 @@
       padding-top: 1rem;
       font-size: 0.85rem;
       color: #444;
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border-radius: 4px;
+    }
+
+    /* レスポンシブ対応 */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+      }
+      .main {
+        margin-left: 0;
+        padding: 1rem;
+      }
+      .song-meta-block {
+        position: static;
+        width: 100%;
+        margin-bottom: 1rem;
+        text-align: left;
+      }
+      .lyrics-grid {
+        margin-top: 1rem;
+      }
+      .verse {
+        min-width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-  <ul>
-    <li><a href="05.html">← 秋田県</a></li>
-  </ul>
-  <hr>
-  <h2>市部</h2>
-  <ul>
-    <li><a href="05-akita.html">秋田市</a></li>
-    <li><a href="05-noshiro.html">能代市</a></li>
-    <li><a href="05-yokote.html">横手市</a></li>
-    <li><a href="05-honjo.html">本荘市</a></li>
-    <li><a href="05-oga.html">男鹿市</a></li>
-    <li><a href="05-omagari.html">大曲市</a></li>
-    <li><a href="05-kazuno.html">鹿角市</a></li>
-    <li><a href="05-yurihonjo.html">由利本荘市</a></li>
-    <li><a href="05-katagami.html">潟上市</a></li>
-    <li><a href="05-daisen.html">大仙市</a></li>
-    <li><a href="05-kitaakita.html">北秋田市</a></li>
-    <li><a href="05-nikaho.html">にかほ市</a></li>
-    <li><a href="05-semboku.html">仙北市</a></li>
-  </ul>
-</div>
+  <div class="container">
+    <div class="sidebar">
+      <ul>
+        <li><a href="05.html">← 秋田県</a></li>
+      </ul>
+      <hr>
+      <h2>市部</h2>
+      <ul>
+        <li><a href="05-akita.html">秋田市</a></li>
+        <li><a href="05-noshiro.html">能代市</a></li>
+        <li><a href="05-yokote.html">横手市</a></li>
+        <li><a href="05-honjo.html">本荘市</a></li>
+        <li><a href="05-oga.html">男鹿市</a></li>
+        <li><a href="05-omagari.html">大曲市</a></li>
+        <li><a href="05-kazuno.html">鹿角市</a></li>
+        <li><a href="05-yurihonjo.html">由利本荘市</a></li>
+        <li><a href="05-katagami.html">潟上市</a></li>
+        <li><a href="05-daisen.html">大仙市</a></li>
+        <li><a href="05-kitaakita.html">北秋田市</a></li>
+        <li><a href="05-nikaho.html">にかほ市</a></li>
+        <li><a href="05-semboku.html">仙北市</a></li>
+      </ul>
+    </div>
 
     <div class="main">
+      <h1>秋田市民歌集</h1>
+      
       <!-- 曲① -->
       <div class="song-section">
-        <h2>秋田市民歌</h2>
+        <h2>秋田市民歌（初代）</h2>
         <div class="song-meta-block">
           制定：1928年<br>
-          作詞：土井晩翠<br>
-          作曲：山田耕筰
+          作詞：土井晩翠　補作：―<br>
+          作曲：山田耕筰　編曲：―
         </div>
-        <div class="lyrics">
-          1　戊辰の昔勤王の、
-          あとは矢留の花ざくら
-          先哲平田生みなせる、
-          誉も薫るわが秋田。
-          　　勉めよ栄えよ、ああわが市民。
+        <div class="lyrics-grid">
+          <div class="verse">
+            <span class="verse-number">1</span>
+            戊辰の昔勤王の、<br>
+            あとは矢留の花ざくら<br>
+            先哲平田生みなせる、<br>
+            誉も薫るわが秋田。<br>
+            　　勉めよ栄えよ、ああわが市民。
+          </div>
+          <div class="verse">
+            <span class="verse-number">2</span>
+            （歌詞未入力）
+          </div>
+          <div class="verse">
+            <span class="verse-number">3</span>
+            （歌詞未入力）
+          </div>
+          <div class="verse">
+            <span class="verse-number">4</span>
+            （歌詞未入力）
+          </div>
         </div>
       </div>
 
       <!-- 曲② -->
       <div class="song-section">
-        <h2>秋田市民歌</h2>
+        <h2>秋田市民歌（2代目）</h2>
         <div class="song-meta-block">
           制定：1949年<br>
-          作詞：花岡としみ<br>
-          作曲：露木次男
+          作詞：花岡としみ　補作：―<br>
+          作曲：露木次男　編曲：―
         </div>
-        <div class="lyrics">
-　　　　　 1 太平の　緑の起伏
-          千秋の　桜は薫る
-          秋田市は　平和の都
-          人の和に　文化を添えて
-          いやさらに　伸びよ栄えよ
+        <div class="lyrics-grid">
+          <div class="verse">
+            <span class="verse-number">1</span>
+            太平の　緑の起伏<br>
+            千秋の　桜は薫る<br>
+            秋田市は　平和の都<br>
+            人の和に　文化を添えて<br>
+            いやさらに　伸びよ栄えよ
+          </div>
+          <div class="verse">
+            <span class="verse-number">2</span>
+            （歌詞未入力）
+          </div>
+          <div class="verse center">
+            <span class="verse-number">3</span>
+            （歌詞未入力）
+          </div>
         </div>
       </div>
 
       <!-- 曲③ -->
       <div class="song-section">
-        <h2>秋田市民歌</h2>
+        <h2>秋田市民歌（3代目）</h2>
         <div class="song-meta-block">
           制定：1953年<br>
-          作詞：大木惇夫<br>
-          作曲：深井史郎
+          作詞：大木惇夫　補作：―<br>
+          作曲：深井史郎　編曲：―
         </div>
-        <div class="lyrics">
-1 太平の　山のみどりだ
-          望みある　秋田の稲だ
-        　ああ　みのり豊かなわれらの力
-          友よ　朝虹かけて
-          築こうよ　平和の都
-          　楽しい市に　生きようよ
-          　明るく　つよく
+        <div class="lyrics-grid">
+          <div class="verse">
+            <span class="verse-number">1</span>
+            太平の　山のみどりだ<br>
+            望みある　秋田の稲だ<br>
+            ああ　みのり豊かなわれらの力<br>
+            友よ　朝虹かけて<br>
+            築こうよ　平和の都<br>
+            　楽しい市に　生きようよ<br>
+            　明るく　つよく
+          </div>
+          <div class="verse">
+            <span class="verse-number">2</span>
+            （歌詞未入力）
+          </div>
+          <div class="verse center">
+            <span class="verse-number">3</span>
+            （歌詞未入力）
+          </div>
         </div>
       </div>
 
@@ -164,14 +273,26 @@
         <h2>秋田市民のうた</h2>
         <div class="song-meta-block">
           制定：1960年<br>
-          作詞・作曲：秋田市民のうた作詞委員会
+          作詞・作曲：秋田市民のうた作詞委員会<br>
+          編曲：―
         </div>
-        <div class="lyrics">
-1 朝太平の　峰に明け
-          岸壁かがやく　秋田港
-          羽越奥羽の交わるところ
-          北日本をひらきゆく
-          使命にもえる　大秋田
+        <div class="lyrics-grid">
+          <div class="verse">
+            <span class="verse-number">1</span>
+            朝太平の　峰に明け<br>
+            岸壁かがやく　秋田港<br>
+            羽越奥羽の交わるところ<br>
+            北日本をひらきゆく<br>
+            使命にもえる　大秋田
+          </div>
+          <div class="verse">
+            <span class="verse-number">2</span>
+            （歌詞未入力）
+          </div>
+          <div class="verse center">
+            <span class="verse-number">3</span>
+            （歌詞未入力）
+          </div>
         </div>
       </div>
 
@@ -180,22 +301,33 @@
         <h2>秋田市記念市民歌</h2>
         <div class="song-meta-block">
           制定：1979年<br>
-          作詞：黒木玲子<br>
-          作曲：藤原政幸
+          作詞：黒木玲子　補作：―<br>
+          作曲：藤原政幸　編曲：―
         </div>
-        <div class="lyrics">
-1 花かおる　千秋の園
-          光満ち　はつらつ歩む
-          若人の　希望輝く
-          ふるさとのまち
-          ああさわやかな
-          わが秋田
+        <div class="lyrics-grid">
+          <div class="verse">
+            <span class="verse-number">1</span>
+            花かおる　千秋の園<br>
+            光満ち　はつらつ歩む<br>
+            若人の　希望輝く<br>
+            ふるさとのまち<br>
+            ああさわやかな<br>
+            わが秋田
+          </div>
+          <div class="verse">
+            <span class="verse-number">2</span>
+            （歌詞未入力）
+          </div>
+          <div class="verse center">
+            <span class="verse-number">3</span>
+            （歌詞未入力）
+          </div>
         </div>
       </div>
 
       <div class="footnote">
         ※秋田市には1920年代から市民歌が複数存在し、うち3曲の「市民歌」が同名異曲として継承されています。
-        またこのほか、<li><a href="05-kbyuwa.html">雄和町民歌</a></li>、<li><a href="05-kbkawabe.html">河辺町町民歌</a></li>も地域歌として継承されています。
+        またこのほか、<a href="05-kbyuwa.html">雄和町民歌</a>、<a href="05-kbkawabe.html">河辺町町民歌</a>も地域歌として継承されています。
       </div>
     </div>
   </div>
