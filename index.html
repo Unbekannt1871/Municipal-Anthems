@@ -37,9 +37,21 @@
       font-weight: bold;
       transition: background-color 0.3s ease;
     }
-    .nav-links a:hover {
-      background-color: #c6e4ff;
+    .nav-links a.green {
+      background-color: #d5f5d0;
+      color: #2e7d32;
     }
+    .nav-links a.blue {
+      background-color: #d0e6ff;
+      color: #0059b2;
+    }
+    .nav-links a.red {
+      background-color: #ffe0e0;
+      color: #c62828;
+    }
+    .nav-links a:hover {
+      opacity: 0.85;
+}
   </style>
 </head>
 <body>
@@ -47,9 +59,9 @@
   <p class="intro">このページはまだ試作中です。</p>
 
   <div class="nav-links">
-    <a href="map.html">地図から探す</a>
-    <a href="list.html">自治体名から探す</a>
-    <a href="search.html">歌詞から探す</a>
+      <a href="map.html" class="green">地図から探す</a>
+      <a href="list.html" class="blue">自治体名から探す</a>
+      <a href="search.html" class="red">歌詞から探す</a>
   </div>
 </body>
 </html>
