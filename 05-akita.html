@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>秋田市</title>
+  <title>秋田市民歌集</title>
   <style>
     body {
       margin: 0;
@@ -106,6 +106,48 @@
     .verse.center {
       text-align: center;
     }
+    
+    /* 2番構成：1-2を隣り合わせ */
+    .lyrics-grid.verses-2 .verse:nth-child(1),
+    .lyrics-grid.verses-2 .verse:nth-child(2) {
+      flex: 0 1 calc(50% - 0.5rem);
+    }
+    
+    /* 3番構成：1-2を隣り合わせ、3を中央 */
+    .lyrics-grid.verses-3 .verse:nth-child(1),
+    .lyrics-grid.verses-3 .verse:nth-child(2) {
+      flex: 0 1 calc(50% - 0.5rem);
+    }
+    .lyrics-grid.verses-3 .verse:nth-child(3) {
+      flex: 0 1 calc(50% - 0.5rem);
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    /* 4番構成：1-2、3-4を隣り合わせ */
+    .lyrics-grid.verses-4 .verse:nth-child(1),
+    .lyrics-grid.verses-4 .verse:nth-child(2) {
+      flex: 0 1 calc(50% - 0.5rem);
+    }
+    .lyrics-grid.verses-4 .verse:nth-child(3),
+    .lyrics-grid.verses-4 .verse:nth-child(4) {
+      flex: 0 1 calc(50% - 0.5rem);
+    }
+    
+    /* 5番構成：1-2、3-4を隣り合わせ、5を中央 */
+    .lyrics-grid.verses-5 .verse:nth-child(1),
+    .lyrics-grid.verses-5 .verse:nth-child(2) {
+      flex: 0 1 calc(50% - 0.5rem);
+    }
+    .lyrics-grid.verses-5 .verse:nth-child(3),
+    .lyrics-grid.verses-5 .verse:nth-child(4) {
+      flex: 0 1 calc(50% - 0.5rem);
+    }
+    .lyrics-grid.verses-5 .verse:nth-child(5) {
+      flex: 0 1 calc(50% - 0.5rem);
+      margin: 0 auto;
+      text-align: center;
+    }
     .verse-number {
       font-weight: bold;
       color: #7b4c20;
@@ -186,7 +228,7 @@
           作詞：土井晩翠　補作：―<br>
           作曲：山田耕筰　編曲：―
         </div>
-        <div class="lyrics-grid">
+        <div class="lyrics-grid verses-4">
           <div class="verse">
             <span class="verse-number">1</span>
             戊辰の昔勤王の、<br>
@@ -231,7 +273,7 @@
             <span class="verse-number">2</span>
             （歌詞未入力）
           </div>
-          <div class="verse center">
+        <div class="lyrics-grid verses-3">
             <span class="verse-number">3</span>
             （歌詞未入力）
           </div>
@@ -246,7 +288,7 @@
           作詞：大木惇夫　補作：―<br>
           作曲：深井史郎　編曲：―
         </div>
-        <div class="lyrics-grid">
+        <div class="lyrics-grid verses-3">
           <div class="verse">
             <span class="verse-number">1</span>
             太平の　山のみどりだ<br>
@@ -261,7 +303,7 @@
             <span class="verse-number">2</span>
             （歌詞未入力）
           </div>
-          <div class="verse center">
+          <div class="verse">
             <span class="verse-number">3</span>
             （歌詞未入力）
           </div>
@@ -276,7 +318,7 @@
           作詞・作曲：秋田市民のうた作詞委員会<br>
           編曲：―
         </div>
-        <div class="lyrics-grid">
+        <div class="lyrics-grid verses-3">
           <div class="verse">
             <span class="verse-number">1</span>
             朝太平の　峰に明け<br>
@@ -289,7 +331,7 @@
             <span class="verse-number">2</span>
             （歌詞未入力）
           </div>
-          <div class="verse center">
+          <div class="verse">
             <span class="verse-number">3</span>
             （歌詞未入力）
           </div>
@@ -304,7 +346,7 @@
           作詞：黒木玲子　補作：―<br>
           作曲：藤原政幸　編曲：―
         </div>
-        <div class="lyrics-grid">
+        <div class="lyrics-grid verses-3">
           <div class="verse">
             <span class="verse-number">1</span>
             花かおる　千秋の園<br>
@@ -318,7 +360,7 @@
             <span class="verse-number">2</span>
             （歌詞未入力）
           </div>
-          <div class="verse center">
+          <div class="verse">
             <span class="verse-number">3</span>
             （歌詞未入力）
           </div>
