@@ -65,105 +65,99 @@
     .song-section h2 {
       font-size: 1.4rem;
       margin-bottom: 0.3rem;
-      color: #7b4c20;
+      color: #2d5016;
     }
     .song-meta-block {
       position: absolute;
       top: 0.3rem;
       right: 0;
       font-size: 0.9rem;
-      color: #666;
+      color: #555;
       text-align: right;
       line-height: 1.4;
       width: 250px;
-      background-color: #f9f9f9;
+      background-color: #e8f5e8;
       padding: 0.5rem;
       border-radius: 4px;
-      border-left: 3px solid #7b4c20;
+      border-left: 3px solid #2d5016;
     }
 
     .lyrics-grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
       gap: 1rem;
       margin-top: 3rem;
       margin-bottom: 1rem;
     }
-    .verse {
-      flex: 1;
-      min-width: 240px;
-      background-color: #f8f8f8;
-      padding: 1rem;
-      border-radius: 6px;
-      white-space: pre-wrap;
-      line-height: 1.6;
-      border-left: 3px solid #ddd;
-      transition: border-color 0.3s ease;
-    }
-    .verse:hover {
-      border-left-color: #7b4c20;
-    }
-    .verse.center {
-      text-align: center;
-    }
     
     /* 2番構成：1-2を隣り合わせ */
-    .lyrics-grid.verses-2 .verse:nth-child(1),
-    .lyrics-grid.verses-2 .verse:nth-child(2) {
-      flex: 0 1 calc(50% - 0.5rem);
+    .lyrics-grid.verses-2 {
+      grid-template-columns: 1fr 1fr;
     }
     
     /* 3番構成：1-2を隣り合わせ、3を中央 */
-    .lyrics-grid.verses-3 .verse:nth-child(1),
-    .lyrics-grid.verses-3 .verse:nth-child(2) {
-      flex: 0 1 calc(50% - 0.5rem);
+    .lyrics-grid.verses-3 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
     }
     .lyrics-grid.verses-3 .verse:nth-child(3) {
-      flex: 0 1 calc(50% - 0.5rem);
+      grid-column: 1 / -1;
+      max-width: 50%;
       margin: 0 auto;
       text-align: center;
     }
     
     /* 4番構成：1-2、3-4を隣り合わせ */
-    .lyrics-grid.verses-4 .verse:nth-child(1),
-    .lyrics-grid.verses-4 .verse:nth-child(2) {
-      flex: 0 1 calc(50% - 0.5rem);
-    }
-    .lyrics-grid.verses-4 .verse:nth-child(3),
-    .lyrics-grid.verses-4 .verse:nth-child(4) {
-      flex: 0 1 calc(50% - 0.5rem);
+    .lyrics-grid.verses-4 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
     }
     
     /* 5番構成：1-2、3-4を隣り合わせ、5を中央 */
-    .lyrics-grid.verses-5 .verse:nth-child(1),
-    .lyrics-grid.verses-5 .verse:nth-child(2) {
-      flex: 0 1 calc(50% - 0.5rem);
-    }
-    .lyrics-grid.verses-5 .verse:nth-child(3),
-    .lyrics-grid.verses-5 .verse:nth-child(4) {
-      flex: 0 1 calc(50% - 0.5rem);
+    .lyrics-grid.verses-5 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto;
     }
     .lyrics-grid.verses-5 .verse:nth-child(5) {
-      flex: 0 1 calc(50% - 0.5rem);
+      grid-column: 1 / -1;
+      max-width: 50%;
       margin: 0 auto;
       text-align: center;
     }
+    
+    .verse {
+      background-color: #f0f8f0;
+      padding: 1rem;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      border-left: 4px solid #4a7c59;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .verse:hover {
+      border-left-color: #2d5016;
+      background-color: #e8f5e8;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    
     .verse-number {
       font-weight: bold;
-      color: #7b4c20;
+      color: #2d5016;
       margin-bottom: 0.5rem;
       display: block;
+      font-size: 1.1em;
     }
 
     .footnote {
-      border-top: 1px solid #aaa;
+      border-top: 1px solid #4a7c59;
       margin-top: 3rem;
       padding-top: 1rem;
       font-size: 0.85rem;
       color: #444;
-      background-color: #f9f9f9;
+      background-color: #e8f5e8;
       padding: 1rem;
       border-radius: 4px;
+      border-left: 3px solid #2d5016;
     }
 
     /* レスポンシブ対応 */
@@ -186,8 +180,17 @@
       .lyrics-grid {
         margin-top: 1rem;
       }
-      .verse {
-        min-width: 100%;
+      .lyrics-grid.verses-2,
+      .lyrics-grid.verses-3,
+      .lyrics-grid.verses-4,
+      .lyrics-grid.verses-5 {
+        grid-template-columns: 1fr;
+      }
+      .lyrics-grid.verses-3 .verse:nth-child(3),
+      .lyrics-grid.verses-5 .verse:nth-child(5) {
+        grid-column: 1;
+        max-width: 100%;
+        text-align: left;
       }
     }
   </style>
@@ -225,8 +228,8 @@
         <h2>秋田市民歌（初代）</h2>
         <div class="song-meta-block">
           制定：1928年<br>
-          作詞：土井晩翠<br>
-          作曲：山田耕筰
+          作詞：土井晩翠　補作：―<br>
+          作曲：山田耕筰　編曲：―
         </div>
         <div class="lyrics-grid verses-4">
           <div class="verse">
@@ -257,8 +260,8 @@
         <h2>秋田市民歌（2代目）</h2>
         <div class="song-meta-block">
           制定：1949年<br>
-          作詞：花岡としみ<br>
-          作曲：露木次男
+          作詞：花岡としみ　補作：―<br>
+          作曲：露木次男　編曲：―
         </div>
         <div class="lyrics-grid">
           <div class="verse">
@@ -285,8 +288,8 @@
         <h2>秋田市民歌（3代目）</h2>
         <div class="song-meta-block">
           制定：1953年<br>
-          作詞：大木惇夫<br>
-          作曲：深井史郎
+          作詞：大木惇夫　補作：―<br>
+          作曲：深井史郎　編曲：―
         </div>
         <div class="lyrics-grid verses-3">
           <div class="verse">
@@ -343,8 +346,8 @@
         <h2>秋田市記念市民歌</h2>
         <div class="song-meta-block">
           制定：1979年<br>
-          作詞：黒木玲子<br>
-          作曲：藤原政幸
+          作詞：黒木玲子　補作：―<br>
+          作曲：藤原政幸　編曲：―
         </div>
         <div class="lyrics-grid verses-3">
           <div class="verse">
