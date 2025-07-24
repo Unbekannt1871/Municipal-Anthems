@@ -180,17 +180,20 @@
       .lyrics-grid {
         margin-top: 1rem;
       }
+      /* モバイルでは全て縦一列に */
       .lyrics-grid.verses-2,
       .lyrics-grid.verses-3,
       .lyrics-grid.verses-4,
       .lyrics-grid.verses-5 {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
       }
       .lyrics-grid.verses-3 .verse:nth-child(3),
       .lyrics-grid.verses-5 .verse:nth-child(5) {
-        grid-column: 1;
-        max-width: 100%;
-        text-align: left;
+        grid-column: 1 !important;
+        max-width: 100% !important;
+        text-align: left !important;
+        margin: 0 !important;
       }
     }
   </style>
@@ -221,15 +224,15 @@
     </div>
 
     <div class="main">
-      <h1>秋田市民歌集</h1>
+      <h1>秋田市</h1>
       
       <!-- 曲① -->
       <div class="song-section">
         <h2>秋田市民歌（初代）</h2>
         <div class="song-meta-block">
           制定：1928年<br>
-          作詞：土井晩翠　補作：―<br>
-          作曲：山田耕筰　編曲：―
+          作詞：土井晩翠<br>
+          作曲：山田耕筰
         </div>
         <div class="lyrics-grid verses-4">
           <div class="verse">
@@ -242,15 +245,27 @@
           </div>
           <div class="verse">
             <span class="verse-number">2</span>
-            （歌詞未入力）
+            沃野茂林をめぐらして、<br>
+            いらかの波は幾万か<br>
+            富を天下に謳はるる、<br>
+            東北の雄わが秋田。<br>
+            　　勉めよ栄えよ、ああわが市民。
           </div>
           <div class="verse">
             <span class="verse-number">3</span>
-            （歌詞未入力）
+            東太平雲に入り、<br>
+            西日本海目もはるか<br>
+            注ぐ雄物の川ともに、<br>
+            進みてやまずわが秋田。<br>
+            　　勉めよ栄えよ、ああわが市民。
           </div>
           <div class="verse">
             <span class="verse-number">4</span>
-            （歌詞未入力）
+            文化日に日にあらたなる、<br>
+            この聖明の御代にして<br>
+            市民の使命おほいなる、<br>
+            望に奮ふわが秋田。<br>
+            　　勉めよ栄えよ、ああわが市民。
           </div>
         </div>
       </div>
@@ -260,10 +275,10 @@
         <h2>秋田市民歌（2代目）</h2>
         <div class="song-meta-block">
           制定：1949年<br>
-          作詞：花岡としみ　補作：―<br>
-          作曲：露木次男　編曲：―
+          作詞：花岡としみ<br>
+          作曲：露木次男
         </div>
-        <div class="lyrics-grid">
+        <div class="lyrics-grid verses-3">
           <div class="verse">
             <span class="verse-number">1</span>
             太平の　緑の起伏<br>
@@ -276,7 +291,7 @@
             <span class="verse-number">2</span>
             （歌詞未入力）
           </div>
-        <div class="lyrics-grid verses-3">
+          <div class="verse">
             <span class="verse-number">3</span>
             （歌詞未入力）
           </div>
@@ -288,8 +303,8 @@
         <h2>秋田市民歌（3代目）</h2>
         <div class="song-meta-block">
           制定：1953年<br>
-          作詞：大木惇夫　補作：―<br>
-          作曲：深井史郎　編曲：―
+          作詞：大木惇夫<br>
+          作曲：深井史郎
         </div>
         <div class="lyrics-grid verses-3">
           <div class="verse">
@@ -318,8 +333,7 @@
         <h2>秋田市民のうた</h2>
         <div class="song-meta-block">
           制定：1960年<br>
-          作詞・作曲：秋田市民のうた作詞委員会<br>
-          編曲：―
+          作詞・作曲：秋田市民のうた作詞委員会
         </div>
         <div class="lyrics-grid verses-3">
           <div class="verse">
@@ -346,8 +360,8 @@
         <h2>秋田市記念市民歌</h2>
         <div class="song-meta-block">
           制定：1979年<br>
-          作詞：黒木玲子　補作：―<br>
-          作曲：藤原政幸　編曲：―
+          作詞：黒木玲子<br>
+          作曲：藤原政幸
         </div>
         <div class="lyrics-grid verses-3">
           <div class="verse">
