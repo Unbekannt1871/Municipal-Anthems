@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>秋田市民歌集</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+      background-color: #fdfdfd;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      display: flex;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #f0f0f0;
+      padding: 1rem;
+      border-right: 1px solid #ccc;
+      height: 100vh;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+      overflow-y: auto;
+    }
+    .main {
+      margin-left: 220px;
+      padding: 2rem;
+      max-width: calc(100vw - 260px);
+    }
+
+    .sidebar h2 {
+      font-size: 1rem;
+      margin: 1rem 0 0.5rem;
+      color: #555;
+    }
+    .sidebar ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .sidebar li {
+      margin: 0.4rem 0;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: #004080;
+    }
+    .sidebar a:hover {
+      text-decoration: underline;
+    }
+
+    .song-section {
+      margin-bottom: 3rem;
+      position: relative;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 2rem;
+    }
+    .song-section:last-of-type {
+      border-bottom: none;
+    }
+    .song-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+      color: #2d5016;
+    }
+    .song-meta-block {
+      position: absolute;
+      top: 0.3rem;
+      right: 0;
+      font-size: 0.9rem;
+      color: #555;
+      text-align: right;
+      line-height: 1.4;
+      width: 200px;
+      background-color: #e8f5e8;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border-left: 3px solid #2d5016;
+    }
+
+    .lyrics-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* 2番構成：1-2を隣り合わせ */
+    .lyrics-grid.verses-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    /* 3番構成：1-2を隣り合わせ、3を中央 */
+    .lyrics-grid.verses-3 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+    }
+    .lyrics-grid.verses-3 .verse:nth-child(3) {
+      grid-column: 1 / -1;
+      max-width: 70%;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    /* 4番構成：1-2、3-4を隣り合わせ */
+    .lyrics-grid.verses-4 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+    }
+    
+    /* 5番構成：1-2、3-4を隣り合わせ、5を中央 */
+    .lyrics-grid.verses-5 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto;
+    }
+    .lyrics-grid.verses-5 .verse:nth-child(5) {
+      grid-column: 1 / -1;
+      max-width: 70%;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .verse {
+      background-color: #f0f8f0;
+      padding: 1rem;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      border-left: 4px solid #4a7c59;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .verse:hover {
+      border-left-color: #2d5016;
+      background-color: #e8f5e8;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    
+    .verse-number {
+      font-weight: bold;
+      color: #2d5016;
+      margin-bottom: 0.5rem;
+      display: block;
+      font-size: 1.1em;
+    }
+
+    .footnote {
+      border-top: 1px solid #4a7c59;
+      margin-top: 3rem;
+      padding-top: 1rem;
+      font-size: 0.85rem;
+      color: #444;
+      background-color: #e8f5e8;
+      padding: 1rem;
+      border-radius: 4px;
+      border-left: 3px solid #2d5016;
+    }
+
+    /* レスポンシブ対応 */
+    @media (max-width: 768px) {
+      .container {
+        display: block;
+      }
+      .sidebar {
+        width: 120px;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 0.3rem;
+        font-size: 0.7rem;
+        background-color: #f8f8f8;
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+      }
+      .sidebar h2 {
+        font-size: 0.7rem;
+        margin: 0.3rem 0 0.2rem;
+        color: #666;
+      }
+      .sidebar ul {
+        margin: 0.2rem 0;
+        padding-left: 0;
+      }
+      .sidebar li {
+        margin: 0.1rem 0;
+        font-size: 0.65rem;
+      }
+      .sidebar a {
+        font-size: 0.65rem;
+        line-height: 1.2;
+      }
+      .main {
+        margin-left: 120px;
+        padding: 0.8rem 0.4rem;
+        max-width: none;
+      }
+      .song-meta-block {
+        position: static;
+        width: 100%;
+        margin-bottom: 0.8rem;
+        text-align: left;
+        font-size: 0.75rem;
+        padding: 0.4rem;
+      }
+      .song-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+      }
+      .song-section h2 {
+        font-size: 1.1rem;
+      }
+      .lyrics-grid {
+        margin-top: 0.8rem;
+        gap: 0.8rem;
+      }
+      /* モバイルでは全て縦一列に */
+      .lyrics-grid.verses-2,
+      .lyrics-grid.verses-3,
+      .lyrics-grid.verses-4,
+      .lyrics-grid.verses-5 {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
+      }
+      .lyrics-grid.verses-3 .verse:nth-child(3),
+      .lyrics-grid.verses-5 .verse:nth-child(5) {
+        grid-column: 1 !important;
+        max-width: 100% !important;
+        text-align: left !important;
+        margin: 0 !important;
+      }
+      .verse {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+        line-height: 1.5;
+      }
+      .verse-number {
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+      }
+      .footnote {
+        font-size: 0.75rem;
+        padding: 0.7rem;
+        margin-top: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <ul>
+        <li><a href="05.html">← 秋田県</a></li>
+      </ul>
+      <hr>
+      <h2>市部</h2>
+      <ul>
+        <li><a href="05-akita.html">秋田市</a></li>
+        <li><a href="05-noshiro.html">能代市</a></li>
+        <li><a href="05-yokote.html">横手市</a></li>
+        <li><a href="05-honjo.html">本荘市</a></li>
+        <li><a href="05-oga.html">男鹿市</a></li>
+        <li><a href="05-omagari.html">大曲市</a></li>
+        <li><a href="05-kazuno.html">鹿角市</a></li>
+        <li><a href="05-yurihonjo.html">由利本荘市</a></li>
+        <li><a href="05-katagami.html">潟上市</a></li>
+        <li><a href="05-daisen.html">大仙市</a></li>
+        <li><a href="05-kitaakita.html">北秋田市</a></li>
+        <li><a href="05-nikaho.html">にかほ市</a></li>
+        <li><a href="05-semboku.html">仙北市</a></li>
+      </ul>
+    </div>
+
+    <div class="main">
+      <h1>大曲市</h1>
+      
+      <!-- 曲① -->
+      <div class="song-section">
+        <h2>大曲市民の歌　若い街</h2>
+        <div class="song-meta-block">
+          制定：1964年5月3日<br>
+          作詞：本郷隆<br>
+          作曲：佐藤長太郎
+        </div>
+        <div class="lyrics-grid verses-4">
+          <div class="verse">
+            <span class="verse-number">1</span>
+            花びら乗せてゆく玉川(たま)の<br>
+            稲穂をわたる　そよ風に<br>
+            仙北の春 爛(た)けくれば<br>
+            ひとしお白き駒岳(こま)の雪<br>
+            　ああ　大曲　大曲<br>
+            　この街にすむひとびとは<br>
+            　みなうららかに花のよう<br>
+　          　笑顔をかわす若い街
+          </div>
+          <div class="verse">
+            <span class="verse-number">2</span>
+            大地を遠くかすむまで<br>
+            稲穂は黄金色(こがね)雲はゆく<br>
+            市民の力波うたせ<br>
+            建設の歌わたりゆく<br>
+　          　ああ　大曲　大曲<br>
+　          　この街にすむひとびとは<br>
+　          　みなたくましく土のよう<br>
+　          　不屈の闘志若い街
+          </div>
+          <div class="verse">
+            <span class="verse-number">3</span>
+            み空は青くかぎりなく<br>
+            陽光(ひざし)は注ぐ銀砂子(ぎんすなご)<br>
+            姫神山も秋深み<br>
+            新しい世に息づくか<br>
+            　ああ　大曲　大曲<br>
+            　この街にすむひとびとは<br>
+            　みなすこやかに樹々のよう<br>
+            　まっすぐのびる　若い街
+          </div>
+          <div class="verse">
+            <span class="verse-number">4</span>
+            めぐる季節のいろどりよ<br>
+            丸子川(まるこ)に尾根に　降る雪よ<br>
+            夏ともなれば哀歓を<br>
+            夜空に描く市民(ひと)の知恵<br>
+            　ああ　大曲　大曲<br>
+            　この街にすむひとびとは<br>
+            　みなほがらかに歌のよう<br>
+            　たのしさつきぬ若い街
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="footnote">
+        ※2005年の大合併により周辺7町とともに廃止され、現在は使われていません。
+        新設合併により大仙市となった1年後に、<a href="05-daisen.html">「夢、この大地」</a>が作られました。
+      </div>
+    </div>
+  </div>
+</body>
+</html>
