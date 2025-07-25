@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>秋田市民歌集</title>
+  <title>大曲氏</title>
   <style>
     body {
       margin: 0;
@@ -289,10 +289,10 @@
         <div class="lyrics-grid verses-4">
           <div class="verse">
             <span class="verse-number">1</span>
-            花びら乗せてゆく玉川(たま)の<br>
+            花びら乗せてゆく<ruby>玉川<tr>たま</tr></ruby>の<br>
             稲穂をわたる　そよ風に<br>
-            仙北の春 爛(た)けくれば<br>
-            ひとしお白き駒岳(こま)の雪<br>
+            仙北の春 <ruby>爛<tr>た</tr><ruby>けくれば<br>
+            ひとしお白き<ruby>駒岳<tr>こま</tr><ruby>の雪<br>
             　ああ　大曲　大曲<br>
             　この街にすむひとびとは<br>
             　みなうららかに花のよう<br>
