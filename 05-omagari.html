@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大曲市</title>
+  <title>秋田市民歌集</title>
   <style>
     body {
       margin: 0;
@@ -65,7 +65,7 @@
     .song-section h2 {
       font-size: 1.4rem;
       margin-bottom: 0.3rem;
-      color: #8b1c62;
+      color: #2d5016;
     }
     .song-meta-block {
       position: absolute;
@@ -76,10 +76,10 @@
       text-align: right;
       line-height: 1.4;
       width: 200px;
-      background-color: #f8e5f0;
+      background-color: #e8f5e8;
       padding: 0.5rem;
       border-radius: 4px;
-      border-left: 3px solid #8b1c62;
+      border-left: 3px solid #2d5016;
     }
 
     .lyrics-grid {
@@ -101,7 +101,7 @@
     }
     .lyrics-grid.verses-3 .verse:nth-child(3) {
       grid-column: 1 / -1;
-      max-width: 70%;
+      max-width: calc(50% - 0.5rem);
       margin: 0 auto;
       text-align: center;
     }
@@ -119,45 +119,45 @@
     }
     .lyrics-grid.verses-5 .verse:nth-child(5) {
       grid-column: 1 / -1;
-      max-width: 70%;
+      max-width: calc(50% - 0.5rem);
       margin: 0 auto;
       text-align: center;
     }
     
     .verse {
-      background-color: #fce4ec;
+      background-color: #f0f8f0;
       padding: 1rem;
       border-radius: 6px;
       white-space: pre-wrap;
       line-height: 1.6;
-      border-left: 4px solid #a03a6d;
+      border-left: 4px solid #4a7c59;
       transition: all 0.3s ease;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .verse:hover {
-      border-left-color: #8b1c62;
-      background-color: #f8e5f0;
+      border-left-color: #2d5016;
+      background-color: #e8f5e8;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
     
     .verse-number {
       font-weight: bold;
-      color: #8b1c62;
+      color: #2d5016;
       margin-bottom: 0.5rem;
       display: block;
       font-size: 1.1em;
     }
 
     .footnote {
-      border-top: 1px solid #a03a6d;
+      border-top: 1px solid #4a7c59;
       margin-top: 3rem;
       padding-top: 1rem;
       font-size: 0.85rem;
       color: #444;
-      background-color: #f8e5f0;
+      background-color: #e8f5e8;
       padding: 1rem;
       border-radius: 4px;
-      border-left: 3px solid #8b1c62;
+      border-left: 3px solid #2d5016;
     }
 
     /* レスポンシブ対応 */
@@ -166,36 +166,36 @@
         display: block;
       }
       .sidebar {
-        width: 120px;
+        width: 90px;
         height: 100vh;
         position: fixed;
         top: 0;
         left: 0;
-        padding: 0.3rem;
-        font-size: 0.7rem;
+        padding: 0.2rem;
+        font-size: 0.65rem;
         background-color: #f8f8f8;
         border-right: 1px solid #ddd;
         overflow-y: auto;
       }
       .sidebar h2 {
-        font-size: 0.7rem;
-        margin: 0.3rem 0 0.2rem;
+        font-size: 0.65rem;
+        margin: 0.2rem 0 0.1rem;
         color: #666;
       }
       .sidebar ul {
-        margin: 0.2rem 0;
+        margin: 0.1rem 0;
         padding-left: 0;
       }
       .sidebar li {
-        margin: 0.1rem 0;
-        font-size: 0.65rem;
+        margin: 0.05rem 0;
+        font-size: 0.6rem;
       }
       .sidebar a {
-        font-size: 0.65rem;
-        line-height: 1.2;
+        font-size: 0.6rem;
+        line-height: 1.1;
       }
       .main {
-        margin-left: 120px;
+        margin-left: 90px;
         padding: 0.8rem 0.4rem;
         max-width: none;
       }
