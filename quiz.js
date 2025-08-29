@@ -1,89 +1,73 @@
-let selectedMode = "all";
-let filteredData = [];
 let currentIndex = 0;
+let filteredLyrics = [];
 
-// 初期化：イベントリスナーの設定
+// ページ読み込み時にイベント設定
 document.addEventListener("DOMContentLoaded", () => {
-  const modeSelector = document.getElementById("modeSelector");
-  const startBtn = document.getElementById("startBtn");
-  const submitBtn = document.getElementById("submitBtn");
+  const modeSelector = document.getElementById("mode");
+  const startButton = document.getElementById("quiz-start");
+  const submitButton = document.getElementById("quiz-submit");
 
-  if (modeSelector) {
-    modeSelector.addEventListener("change", (e) => {
-      selectedMode = e.target.value;
+  if (startButton) {
+    startButton.addEventListener("click", () => {
+      const selectedMode = modeSelector ? modeSelector.value : "all";
+      startQuiz(selectedMode);
     });
   }
 
-  if (startBtn) {
-    startBtn.addEventListener("click", () => {
-      startQuizWithMode(selectedMode);
-    });
-  }
-
-  if (submitBtn) {
-    submitBtn.addEventListener("click", checkAnswer);
+  if (submitButton) {
+    submitButton.addEventListener("click", checkAnswer);
   }
 });
 
-// クイズ開始：モードに応じてデータを絞り込み
-function startQuizWithMode(mode) {
+// クイズ開始：モードに応じて歌詞データを絞り込み
+function startQuiz(mode) {
   if (!Array.isArray(lyricsData) || lyricsData.length === 0) {
     alert("歌詞データが読み込まれていません");
     return;
   }
 
-  if (mode === "all") {
-    filteredData = [...lyricsData];
-  } else {
-    filteredData = lyricsData.filter(entry => entry.type === mode);
-  }
+  filteredLyrics = mode === "all"
+    ? [...lyricsData]
+    : lyricsData.filter(entry => entry.type === mode);
 
-  if (filteredData.length === 0) {
+  if (filteredLyrics.length === 0) {
     alert("このモードにはデータがありません");
     return;
   }
 
-  filteredData = shuffleArray(filteredData);
+  filteredLyrics = shuffleArray(filteredLyrics);
   currentIndex = 0;
-  showNextQuestion();
+  showQuestion();
 }
 
-// 問題表示：歌詞をマスクして表示
-function showNextQuestion() {
-  if (currentIndex >= filteredData.length) {
-    document.getElementById("question").innerText = "クイズ終了！";
-    document.getElementById("submitBtn").disabled = true;
-    return;
-  }
+// 歌詞表示（マスク済み前提）
+function showQuestion() {
+  const entry = filteredLyrics[currentIndex];
 
-  const entry = filteredData[currentIndex];
-  const maskedLyrics = maskMunicipality(entry.lyrics, entry.municipality);
-
-  document.getElementById("question").innerText = maskedLyrics;
-  document.getElementById("answerInput").value = "";
-  document.getElementById("result").innerText = "";
-  document.getElementById("submitBtn").disabled = false;
+  document.getElementById("quiz-lyrics").textContent = entry.lyrics;
+  document.getElementById("quiz-answer").value = "";
+  document.getElementById("quiz-result").textContent = "";
+  document.getElementById("quiz-submit").disabled = false;
 }
 
-// 回答判定：入力と正解を比較
+// 回答判定
 function checkAnswer() {
-  const userAnswer = document.getElementById("answerInput").value.trim();
-  const correctAnswer = filteredData[currentIndex].municipality;
+  const userInput = document.getElementById("quiz-answer").value.trim();
+  const correct = filteredLyrics[currentIndex].municipality;
 
-  if (userAnswer === correctAnswer) {
-    document.getElementById("result").innerText = "正解！";
+  if (userInput === correct) {
+    document.getElementById("quiz-result").textContent = "正解！";
   } else {
-    document.getElementById("result").innerText = `不正解。正解は「${correctAnswer}」です。`;
+    document.getElementById("quiz-result").textContent = `不正解。正解は「${correct}」です。`;
   }
 
   currentIndex++;
-  setTimeout(showNextQuestion, 1500);
-}
-
-// 歌詞から自治体名をマスク
-function maskMunicipality(lyrics, municipality) {
-  const regex = new RegExp(municipality, "g");
-  return lyrics.replace(regex, "◯◯");
+  if (currentIndex < filteredLyrics.length) {
+    setTimeout(showQuestion, 1500);
+  } else {
+    document.getElementById("quiz-lyrics").textContent = "クイズ終了！";
+    document.getElementById("quiz-submit").disabled = true;
+  }
 }
 
 // 配列シャッフル
