@@ -4,60 +4,623 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>自治体歌クイズ</title>
-  <!-- 外部CSSを読み込む -->
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #cc5500;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2em;
+    }
+
+    .setup-area {
+      text-align: center;
+    }
+
+    .category-select {
+      margin-bottom: 30px;
+    }
+
+    .category-title, .mode-title {
+      color: #994400;
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.3rem;
+    }
+
+    .category-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .category-block {
+      flex: 0 0 auto;
+      background-color: #f0f0f0;
+      color: #666;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      border: 2px solid #ddd;
+    }
+
+    .category-block:hover {
+      background-color: #e6e6e6;
+      border-color: #bbb;
+    }
+
+    .category-block.selected {
+      background-color: #ffe6cc;
+      color: #cc5500;
+      border-color: #ff9933;
+    }
+
+    // 削除された部分（グラデーション背景のクラス定義）
+    
+
+    .select-all-btn {
+      background-color: #e6e6e6;
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: all 0.3s ease;
+    }
+
+    .select-all-btn:hover {
+      background-color: #d9d9d9;
+    }
+
+    .mode-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .mode-btn {
+      background: linear-gradient(45deg, #16a085, #1abc9c);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      min-width: 140px;
+    }
+
+    .mode-btn:hover {
+      background: linear-gradient(45deg, #138d75, #17a2b8);
+    }
+
+    .mode-btn.selected {
+      background: linear-gradient(45deg, #e74c3c, #c0392b);
+    }
+
+    .mode-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .start-btn {
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1em;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+    }
+
+    .start-btn:hover {
+      background-color: #e55a00;
+    }
+
+    .start-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    #quiz-area {
+      text-align: center;
+      display: none;
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .progress-info, .score {
+      font-size: 1em;
+      font-weight: bold;
+      color: #994400;
+    }
+
+    .lyrics-display {
+      background: #fafafa;
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-left: 4px solid #ff6600;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .lyrics-text {
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: #333;
+      white-space: pre-line;
+    }
+
+    .answer-input {
+      width: 100%;
+      max-width: 400px;
+      padding: 0.8rem;
+      font-size: 1em;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      outline: none;
+      transition: all 0.3s ease;
+      margin-bottom: 1rem;
+    }
+
+    .answer-input:focus {
+      border-color: #ff6600;
+    }
+
+    .submit-btn {
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #e55a00;
+    }
+
+    .submit-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .feedback {
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 6px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .feedback.correct {
+      background: #e8f5e8;
+      color: #2d5a2d;
+      border: 1px solid #4caf50;
+      display: block;
+    }
+
+    .feedback.incorrect {
+      background: #ffeaea;
+      color: #d32f2f;
+      border: 1px solid #f44336;
+      display: block;
+    }
+
+    .next-btn, .restart-btn {
+      background-color: #ff9933;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin: 0.5rem;
+    }
+
+    .next-btn:hover, .restart-btn:hover {
+      background-color: #e6881a;
+    }
+
+    .result-area {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      background: #fafafa;
+      border-radius: 6px;
+      margin-top: 1.5rem;
+      border: 1px solid #ddd;
+    }
+
+    .result-title {
+      font-size: 1.5em;
+      color: #cc5500;
+      margin-bottom: 1rem;
+    }
+
+    .result-score {
+      font-size: 1.2em;
+      color: #994400;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .mode-buttons {
+        flex-direction: column;
+      }
+      
+      .quiz-header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>自治体歌クイズ</h1>
-
-    <!-- 設定画面 -->
+    <h1>🎵 自治体歌クイズ 🎵</h1>
+    
     <div class="setup-area">
-      <h2>カテゴリ選択</h2>
-      <div class="category-list">
-        <div class="category-block" data-type="prefecture">都道府県</div>
-        <div class="category-block" data-type="city">市</div>
-        <div class="category-block" data-type="ward">区</div>
-        <div class="category-block" data-type="town">町</div>
-        <div class="category-block" data-type="village">村</div>
-        <div class="category-block" data-type="abolished">廃止</div>
-      </div>
-      <button id="selectAll">全選択</button>
-
-      <h2>出題数選択</h2>
-      <div class="mode-list">
-        <button class="mode-btn" data-mode="10">10問</button>
-        <button class="mode-btn" data-mode="20">20問</button>
-        <button class="mode-btn" data-mode="30">30問</button>
-        <button class="mode-btn" data-mode="endless">終わりなし</button>
+      <!-- 制度区分の選択 -->
+      <div class="category-select">
+        <div class="category-title">出題する自治体の種類を選択してください</div>
+        <div class="category-grid">
+          <div class="category-block prefecture" data-type="prefecture">都道府県</div>
+          <div class="category-block city" data-type="city">市</div>
+          <div class="category-block ward" data-type="ward">区</div>
+          <div class="category-block town" data-type="town">町</div>
+          <div class="category-block village" data-type="village">村</div>
+          <div class="category-block abolished" data-type="abolished">廃止</div>
+        </div>
+        <button class="select-all-btn" id="selectAll">すべて選択 / 解除</button>
       </div>
 
-      <button id="startQuiz">クイズ開始</button>
+      <!-- 出題モードの選択 -->
+      <div class="mode-select">
+        <div class="mode-title">出題モードを選択してください</div>
+        <div class="mode-buttons">
+          <button class="mode-btn" id="mode-10" data-mode="10">10問チャレンジ</button>
+          <button class="mode-btn" id="mode-20" data-mode="20">20問チャレンジ</button>
+          <button class="mode-btn" id="mode-endless" data-mode="endless">不正解まで継続</button>
+        </div>
+      </div>
+
+      <button class="start-btn" id="startQuiz" disabled>クイズを開始する</button>
     </div>
 
-    <!-- クイズ画面 -->
-    <div id="quiz-area" style="display:none;">
-      <div id="progress">問題 <span id="current-question">1</span>/<span id="total-questions">10</span></div>
-      <div id="lyrics"></div>
-      <input type="text" id="answer" placeholder="答えを入力">
-      <button id="submit">回答する</button>
-      <div id="result"></div>
-      <button id="nextBtn" style="display:none;">次の問題</button>
+    <!-- クイズ本体 -->
+    <div id="quiz-area">
+      <div class="quiz-header">
+        <div class="progress-info">
+          <span id="current-question">1</span> / <span id="total-questions">20</span>
+        </div>
+        <div class="score">正解数: <span id="correct-count">0</span></div>
+      </div>
+      
+      
+      <div class="hint-section">
+        <div class="hint-title">💡 ヒント</div>
+        <div class="hint-info">
+          <div class="hint-item">正式名称: <span id="formal-length">0</span>文字</div>
+          <div class="hint-item">ひらがな: <span id="hiragana-length">0</span>文字</div>
+        </div>
+      </div>
+      
+      <div class="lyrics-display">
+        <div class="lyrics-text" id="lyrics">ここに歌詞が表示されます</div>
+      </div>
+      
+      <div class="answer-section">
+        <input type="text" class="answer-input" id="answer" placeholder="自治体名を入力してください（例：東京都、大阪市）">
+        <br>
+        <button class="submit-btn" id="submit">回答する</button>
+      </div>
+      
+      <div class="feedback" id="feedback"></div>
+      
+      <button class="next-btn" id="nextBtn" style="display:none;">次の問題</button>
     </div>
 
-    <!-- 結果画面 -->
-    <div id="result-area" style="display:none;">
-      <h2>結果発表</h2>
-      <p>正解数: <span id="correct-count"></span>/<span id="total-count"></span></p>
-      <button id="restartBtn">もう一度</button>
+    <!-- 結果表示エリア -->
+    <div class="result-area" id="result-area">
+      <div class="result-title">🎉 クイズ終了！ 🎉</div>
+      <div class="result-score" id="final-score"></div>
+      <button class="restart-btn" id="restartBtn">もう一度挑戦する</button>
     </div>
   </div>
 
-  <!-- 外部JSを読み込む -->
-  <script src="js/quiz.js"></script>
-</body>
-</html>
-  <!-- JS を外部から読み込み -->
-  <script src="js/quiz.js"></script>
-</body>
-</html>
+  <script>
+    // サンプルデータ（実際のプロジェクトではJSONファイルから読み込み）
+    const sampleData = [
+      {
+        lyrics: "故郷の山河　美しく\n風光明媚な　この土地に\n希望を胸に　歩み行く",
+        answer: "山梨県",
+        hiragana: "やまなしけん",
+        formalLength: 3,
+        hiraganaLength: 6,
+        type: "prefecture"
+      },
+      {
+        lyrics: "青い空に　白い雲\n緑豊かな　田園風景\n心も軽やか　歌声響く",
+        answer: "長野市",
+        hiragana: "ながのし",
+        formalLength: 3,
+        hiraganaLength: 4,
+        type: "city"
+      },
+      {
+        lyrics: "海の向こうに　夢を見て\n港町の　鐘が鳴る\n今日も明日も　頑張ろう",
+        answer: "横浜市",
+        hiragana: "よこはまし",
+        formalLength: 3,
+        hiraganaLength: 5,
+        type: "city"
+      },
+      {
+        lyrics: "桜咲く道　歩きながら\n新しい季節　迎えよう\nみんなで作る　明るい未来",
+        answer: "大阪府",
+        hiragana: "おおさかふ",
+        formalLength: 3,
+        hiraganaLength: 5,
+        type: "prefecture"
+      },
+      {
+        lyrics: "山並み遠く　空高く\n清らかな水　流れゆく\n自然と共に　生きていこう",
+        answer: "岐阜県",
+        hiragana: "ぎふけん",
+        formalLength: 3,
+        hiraganaLength: 4,
+        type: "prefecture"
+      }
+    ];
+
+    let selectedCategories = [];
+    let selectedMode = null;
+    let currentQuiz = [];
+    let currentQuestionIndex = 0;
+    let correctCount = 0;
+    let totalQuestions = 0;
+
+    // 初期化
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeEventListeners();
+    });
+
+    function initializeEventListeners() {
+      // カテゴリ選択
+      document.querySelectorAll('.category-block').forEach(block => {
+        block.addEventListener('click', function() {
+          toggleCategory(this.dataset.type, this);
+        });
+      });
+
+      // 全選択ボタン
+      document.getElementById('selectAll').addEventListener('click', toggleAllCategories);
+
+      // モード選択
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          selectMode(this.dataset.mode, this);
+        });
+      });
+
+      // クイズ開始
+      document.getElementById('startQuiz').addEventListener('click', startQuiz);
+
+      // 回答送信
+      document.getElementById('submit').addEventListener('click', submitAnswer);
+      
+      // エンターキーでも送信
+      document.getElementById('answer').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          submitAnswer();
+        }
+      });
+
+      // 次の問題
+      document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+
+      // リスタート
+      document.getElementById('restartBtn').addEventListener('click', restartQuiz);
+    }
+
+    function toggleCategory(type, element) {
+      const index = selectedCategories.indexOf(type);
+      if (index > -1) {
+        selectedCategories.splice(index, 1);
+        element.classList.remove('selected');
+      } else {
+        selectedCategories.push(type);
+        element.classList.add('selected');
+      }
+      updateStartButton();
+    }
+
+    function toggleAllCategories() {
+      const blocks = document.querySelectorAll('.category-block');
+      if (selectedCategories.length === blocks.length) {
+        // 全解除
+        selectedCategories = [];
+        blocks.forEach(block => block.classList.remove('selected'));
+      } else {
+        // 全選択
+        selectedCategories = [];
+        blocks.forEach(block => {
+          selectedCategories.push(block.dataset.type);
+          block.classList.add('selected');
+        });
+      }
+      updateStartButton();
+    }
+
+    function selectMode(mode, element) {
+      selectedMode = mode;
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.style.background = 'linear-gradient(45deg, #16a085, #1abc9c)';
+      });
+              element.style.background = 'linear-gradient(45deg, #e74c3c, #c0392b)';
+      updateStartButton();
+    }
+
+    function updateStartButton() {
+      const startBtn = document.getElementById('startQuiz');
+      if (selectedCategories.length > 0 && selectedMode) {
+        startBtn.disabled = false;
+      } else {
+        startBtn.disabled = true;
+      }
+    }
+
+    function startQuiz() {
+      // 選択されたカテゴリのデータを取得
+      currentQuiz = sampleData.filter(item => selectedCategories.includes(item.type));
+      
+      if (currentQuiz.length === 0) {
+        alert('選択されたカテゴリにデータがありません。');
+        return;
+      }
+
+      // データをシャッフル
+      currentQuiz = shuffleArray([...currentQuiz]);
+
+      // 問題数を設定
+      if (selectedMode === 'endless') {
+        totalQuestions = currentQuiz.length;
+        document.getElementById('total-questions').textContent = '∞';
+      } else {
+        totalQuestions = Math.min(parseInt(selectedMode), currentQuiz.length);
+        currentQuiz = currentQuiz.slice(0, totalQuestions);
+        document.getElementById('total-questions').textContent = totalQuestions;
+      }
+
+      currentQuestionIndex = 0;
+      correctCount = 0;
+
+      // UI切り替え
+      document.querySelector('.setup-area').style.display = 'none';
+      document.getElementById('quiz-area').style.display = 'block';
+
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const question = currentQuiz[currentQuestionIndex];
+      document.getElementById('lyrics').textContent = question.lyrics;
+      document.getElementById('formal-length').textContent = question.formalLength;
+      document.getElementById('hiragana-length').textContent = question.hiraganaLength;
+      document.getElementById('answer').value = '';
+      document.getElementById('answer').focus();
+      document.getElementById('submit').disabled = false;
+      document.getElementById('feedback').style.display = 'none';
+      document.getElementById('nextBtn').style.display = 'none';
+      
+      // 進行状況を更新
+      if (selectedMode !== 'endless') {
+        document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+      } else {
+        document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+      }
+      document.getElementById('correct-count').textContent = correctCount;
+    }
+
+    function submitAnswer() {
+      const userAnswer = document.getElementById('answer').value.trim();
+      const correctAnswer = currentQuiz[currentQuestionIndex].answer;
+      const feedback = document.getElementById('feedback');
+
+      document.getElementById('submit').disabled = true;
+
+      if (userAnswer === correctAnswer || 
+          userAnswer === correctAnswer.replace(/[都道府県市区町村]/g, '') ||
+          userAnswer === currentQuiz[currentQuestionIndex].hiragana) {
+        // 正解
+        correctCount++;
+        feedback.className = 'feedback correct';
+        feedback.textContent = `🎉 正解！ 答え: ${correctAnswer}`;
+        feedback.style.display = 'block';
+        
+        // 次の問題へ
+        setTimeout(() => {
+          currentQuestionIndex++;
+          if (currentQuestionIndex < currentQuiz.length && 
+              (selectedMode === 'endless' || currentQuestionIndex < totalQuestions)) {
+            showQuestion();
+          } else {
+            showResult();
+          }
+        }, 2000);
+      } else {
+        // 不正解
+        feedback.className = 'feedback incorrect';
+        feedback.textContent = `❌ 不正解... 正解は: ${correctAnswer}`;
+        feedback.style.display = 'block';
+
+        if (selectedMode === 'endless') {
+          // エンドレスモードは不正解で終了
+          setTimeout(showResult, 2000);
+        } else {
+          // 次の問題ボタンを表示
+          document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < totalQuestions) {
+        showQuestion();
+      } else {
+        showResult();
+      }
